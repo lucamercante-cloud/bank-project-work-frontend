@@ -1,8 +1,8 @@
 export interface ContoCorrente {
-  contoCorrenteID: string;
+  id: string;
   email: string;
   nomeTitolare: string;
   cognomeTitolare: string;
-  dataApertura: Date;
-  iban: string | null;
+  dataApertura: string;
+  iban?: string | null;
 }
