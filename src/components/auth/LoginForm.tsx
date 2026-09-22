@@ -122,10 +122,10 @@ export const LoginForm = () => {
                     </div>
 
                     {/* Alert Errore */}
-                    {error && (
+                    {serverError && (
                         <div className="mb-6 p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-md flex items-center gap-2">
                             <FontAwesomeIcon icon={faTriangleExclamation} className="text-rose-500 text-sm shrink-0" />
-                            <span>{error}</span>
+                            <span>{serverError}</span>
                         </div>
                     )}
 
