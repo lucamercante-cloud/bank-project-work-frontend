@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { register } from "../../services/auth.service";
-
+import img from "../../assets/imgRegistration.jpg";
+import img2diobastardp from "../../assets/gemini-svg.svg"
 export const RegistrationForm = () => {
     // Stati per i dati del form
     const [nomeTitolare, setNomeTitolare] = useState("");
@@ -17,10 +18,6 @@ export const RegistrationForm = () => {
     const [passwordMismatch, setPasswordMismatch] = useState(false);
 
     // Invio del form
-    // Nota: email, forza password, campi obbligatori ed email duplicata
-    // sono validati lato backend. L'unico controllo qui è
-    // password === confermaPassword, perché confermaPassword non viene
-    // nemmeno inviata alla WebApi (serve solo per l'utente).
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setServerError(null);
@@ -64,44 +61,13 @@ export const RegistrationForm = () => {
 
     return (
         <div className="min-h-screen flex w-full bg-slate-950 text-slate-100">
-            {/* --- SEZIONE SINISTRA: Hero Banner --- */}
-            <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-cover bg-center relative" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200')" }}>
-                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"></div>
-
-                <div className="relative z-10 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center font-bold text-slate-950 text-sm">
-                        G
-                    </div>
-                    <span className="font-semibold text-lg tracking-wider text-white">GEMIT BANK</span>
-                </div>
-
-                <div className="relative z-10 my-auto max-w-lg">
-                    <h1 className="text-3xl font-semibold tracking-tight text-white mb-3">
-                        Apri il tuo conto <br />
-                        <span className="text-[#59DE00]">in pochi minuti</span>
-                    </h1>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                        Registrati per ottenere un conto corrente digitale, monitorare i movimenti e operare in totale sicurezza.
-                    </p>
-                </div>
-
-                <div className="relative z-10 flex justify-between text-xs text-slate-500 border-t border-slate-800/80 pt-4">
-                    <p>© 2026 Gemit Bank Corporation</p>
-                    <a href="#" className="hover:text-slate-300 transition-colors">Note Legali</a>
-                </div>
-            </div>
-
-            {/* --- SEZIONE DESTRA: Form di Registrazione --- */}
+            {/* --- SEZIONE SINISTRA: Form di Registrazione --- */}
             <div className="w-full lg:w-1/2 bg-white text-slate-900 flex flex-col justify-between p-8 md:p-16">
                 <div className="max-w-sm w-full mx-auto my-auto">
 
-                    <div className="mb-8">
-                        <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 border border-emerald-100">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                            </svg>
-                        </div>
-                        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Crea il tuo account</h2>
+                    <div className="mb-8 text-center flex flex-col items-center">
+                        <img src={img2diobastardp} className="h-[4vh] mb-4" alt="Logo" />
+                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Crea il tuo account</h2>
                         <p className="text-xs text-slate-500 mt-1">
                             Compila i campi per aprire un nuovo conto corrente.
                         </p>
@@ -220,8 +186,58 @@ export const RegistrationForm = () => {
                     </form>
 
                     <p className="text-center text-xs text-slate-500 mt-8">
-                        Hai già un account? <a href="/login" className="text-emerald-600 font-semibold hover:underline">Accedi</a>
+                        Hai già un account? <a href="/login" className="text-[#59DE00] font-semibold hover:underline">Accedi</a>
                     </p>
+                </div>
+            </div>
+
+            {/* --- SEZIONE DESTRA: Hero Banner --- */}
+            <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-cover bg-center relative" style={{ backgroundImage: `url(${img})` }}>
+                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-s"></div>
+
+                <div className="relative z-10 flex items-center gap-3">
+                    <img src={img2diobastardp} className="h-[6vh]"></img>
+                    <span className="font-bold text-xl tracking-wider text-white">
+                        GEMIT<span className="text-[#59DE00]">BANK</span>
+                    </span>
+                </div>
+
+                <div className="relative z-10 my-auto max-w-lg">
+                    <h1 className="text-3xl font-semibold tracking-tight text-white mb-3">
+                        Apri il tuo conto <br />
+                        <span className="text-[#59DE00]">in pochi minuti</span>
+                    </h1>
+                    <p className="text-slate-400 text-sm leading-relaxed mb-8">
+                        Registrati per ottenere un conto corrente digitale, monitorare i movimenti e operare in totale sicurezza.
+                    </p>
+                    <div className="grid grid-cols-2 items-center gap-6 py-4">
+                        {/* Colonna Sinistra */}
+                        <div>
+                            <div className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+                                $42B+
+                            </div>
+                            <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-1">
+                                Assets Engineered
+                            </div>
+                        </div>
+
+                        {/* Divisore verticale + Colonna Destra */}
+                        <div className="flex items-center gap-6 border-l border-slate-700/60 pl-6">
+                            <div>
+                                <div className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+                                    256-Bit
+                                </div>
+                                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-1">
+                                    Military Encryption
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="relative z-10 flex justify-between text-xs text-slate-500 border-t border-slate-800/80 pt-4">
+                    <p>© 2026 Gemit Bank Corporation</p>
+                    <a href="#" className="hover:text-slate-300 transition-colors">Note Legali</a>
                 </div>
             </div>
         </div>
