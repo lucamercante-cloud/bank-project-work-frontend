@@ -17,3 +17,7 @@ export async function register(data: RegisterData): Promise<RegisterResponse> {
   return response.data;
 }
 
+export function logout(): void {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}

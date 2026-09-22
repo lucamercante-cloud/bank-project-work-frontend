@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { me } from "../../services/conto.service";
 import { useEffect, useState } from "react";
 import type { ContoCorrente } from "../../types/conto";
+import { logout } from "../../services/auth.service";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Navbar = () => {
     ];
 
     const handleLogout = () => {
-        // Qui poi cancelli il token/sessione
+        logout();
         navigate("/login");
     };
 
