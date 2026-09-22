@@ -16,3 +16,4 @@ export async function register(data: RegisterData): Promise<RegisterResponse> {
   const response = await api.post<RegisterResponse>("/register", data);
   return response.data;
 }
+

@@ -11,6 +11,7 @@ import {
     faEyeSlash,
     faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 // 1. Tipizzazione esplicita con "as const"
 const pageVariants = {
@@ -37,7 +38,11 @@ const pageVariants = {
 } as const;
 
 export const LoginForm = () => {
+<<<<<<< HEAD
     // Stati per i dati del form
+=======
+    const navigate = useNavigate();
+>>>>>>> 9136230 (creation navbar)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -54,7 +59,7 @@ export const LoginForm = () => {
 
         try {
             await login({ email, password });
-            window.location.href = "/dashboard";
+            navigate("/homepage")
         } catch (err: any) {
             setServerError(
                 err?.response?.data?.message || "Credenziali non valide o errore di connessione."
