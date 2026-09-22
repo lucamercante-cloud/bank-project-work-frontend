@@ -78,7 +78,7 @@ export const RegistrationForm = () => {
                 <div className="relative z-10 my-auto max-w-lg">
                     <h1 className="text-3xl font-semibold tracking-tight text-white mb-3">
                         Apri il tuo conto <br />
-                        <span className="text-emerald-400">in pochi minuti</span>
+                        <span className="text-[#59DE00]">in pochi minuti</span>
                     </h1>
                     <p className="text-slate-400 text-sm leading-relaxed mb-8">
                         Registrati per ottenere un conto corrente digitale, monitorare i movimenti e operare in totale sicurezza.
