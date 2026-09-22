@@ -1,7 +1,34 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { register } from "../../services/auth.service";
 import img from "../../assets/imgRegistration.jpg";
-import img2diobastardp from "../../assets/gemini-svg.svg"
+import logoImg from "../../assets/gemini-svg.svg";
+
+// 1. Aggiunto "as const" per tipizzare correttamente la transizione ed evitare errori TypeScript
+const pageVariants = {
+    initial: {
+        opacity: 0,
+        x: 8
+    },
+    animate: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            duration: 0.35,
+            ease: "easeOut"
+        }
+    },
+    exit: {
+        opacity: 0,
+        x: -8,
+        transition: {
+            duration: 0.25,
+            ease: "easeIn"
+        }
+    }
+} as const;
+
 export const RegistrationForm = () => {
     // Stati per i dati del form
     const [nomeTitolare, setNomeTitolare] = useState("");
@@ -60,13 +87,23 @@ export const RegistrationForm = () => {
     };
 
     return (
-        <div className="min-h-screen flex w-full bg-slate-950 text-slate-100">
+        <motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            // 2. Usiamo "fixed inset-0 w-screen h-screen" per bloccare fisicamente la pagina ed evitare sovrapposizioni flessibili durante la transizione
+            className="fixed inset-0 w-screen h-screen flex bg-slate-950 text-slate-100 font-sans overflow-hidden"
+        >
             {/* --- SEZIONE SINISTRA: Form di Registrazione --- */}
-            <div className="w-full lg:w-1/2 bg-white text-slate-900 flex flex-col justify-between p-8 md:p-16">
+            <div
+                // 3. [scrollbar-gutter:stable] impedisce lo scatto orizzontale quando la barra di scorrimento appare/scompare
+                className="w-full lg:w-1/2 bg-white text-slate-900 flex flex-col justify-between p-8 md:p-16 h-full overflow-y-auto shrink-0 [scrollbar-gutter:stable]"
+            >
                 <div className="max-w-sm w-full mx-auto my-auto">
 
                     <div className="mb-8 text-center flex flex-col items-center">
-                        <img src={img2diobastardp} className="h-[4vh] mb-4" alt="Logo" />
+                        <img src={logoImg} className="h-[4vh] mb-4" alt="Logo" />
                         <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Crea il tuo account</h2>
                         <p className="text-xs text-slate-500 mt-1">
                             Compila i campi per aprire un nuovo conto corrente.
@@ -103,7 +140,7 @@ export const RegistrationForm = () => {
                                     value={nomeTitolare}
                                     onChange={(e) => setNomeTitolare(e.target.value)}
                                     placeholder="Mario"
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-[#59DE00] focus:bg-white transition-all"
                                 />
                             </div>
 
@@ -117,7 +154,7 @@ export const RegistrationForm = () => {
                                     value={cognomeTitolare}
                                     onChange={(e) => setCognomeTitolare(e.target.value)}
                                     placeholder="Rossi"
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-[#59DE00] focus:bg-white transition-all"
                                 />
                             </div>
                         </div>
@@ -132,7 +169,7 @@ export const RegistrationForm = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="nome@azienda.com"
-                                className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-[#59DE00] focus:bg-white transition-all"
                             />
                         </div>
 
@@ -147,7 +184,7 @@ export const RegistrationForm = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-md pl-3 pr-14 py-2 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-md pl-3 pr-20 py-2 text-sm text-slate-900 focus:outline-none focus:border-[#59DE00] focus:bg-white transition-all"
                                 />
                                 <button
                                     type="button"
@@ -169,7 +206,7 @@ export const RegistrationForm = () => {
                                 value={confermaPassword}
                                 onChange={(e) => setConfermaPassword(e.target.value)}
                                 placeholder="••••••••"
-                                className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-[#59DE00] focus:bg-white transition-all"
                             />
                             {passwordMismatch && (
                                 <p className="text-rose-600 text-[11px] mt-1">Le password non coincidono.</p>
@@ -179,31 +216,37 @@ export const RegistrationForm = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-slate-900 text-white font-medium py-2.5 rounded-md hover:bg-slate-800 transition-colors text-sm disabled:opacity-50 flex items-center justify-center gap-2 !mt-6"
+                            className="w-full bg-[#59DE00] text-black font-bold py-2.5 rounded-md border border-[#59DE00] hover:bg-white hover:text-[#59DE00] transition-all duration-200 text-sm disabled:opacity-50 flex items-center justify-center gap-2 !mt-6"
                         >
                             {isLoading ? <span>Registrazione in corso...</span> : <span>Crea account</span>}
                         </button>
                     </form>
 
                     <p className="text-center text-xs text-slate-500 mt-8">
-                        Hai già un account? <a href="/login" className="text-[#59DE00] font-semibold hover:underline">Accedi</a>
+                        Hai già un account?{" "}
+                        <Link to="/login" className="text-[#59DE00] font-semibold hover:underline">
+                            Accedi
+                        </Link>
                     </p>
                 </div>
             </div>
 
             {/* --- SEZIONE DESTRA: Hero Banner --- */}
-            <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-cover bg-center relative" style={{ backgroundImage: `url(${img})` }}>
-                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-s"></div>
+            <div
+                className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-cover bg-center relative h-full shrink-0"
+                style={{ backgroundImage: `url(${img})` }}
+            >
+                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px]"></div>
 
                 <div className="relative z-10 flex items-center gap-3">
-                    <img src={img2diobastardp} className="h-[6vh]"></img>
-                    <span className="font-bold text-xl tracking-wider text-white">
+                    <img src={logoImg} className="h-[6vh]" alt="Logo" />
+                    <span className="font-extrabold text-xl tracking-wider text-white">
                         GEMIT<span className="text-[#59DE00]">BANK</span>
                     </span>
                 </div>
 
                 <div className="relative z-10 my-auto max-w-lg">
-                    <h1 className="text-3xl font-semibold tracking-tight text-white mb-3">
+                    <h1 className="text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
                         Apri il tuo conto <br />
                         <span className="text-[#59DE00]">in pochi minuti</span>
                     </h1>
@@ -211,7 +254,6 @@ export const RegistrationForm = () => {
                         Registrati per ottenere un conto corrente digitale, monitorare i movimenti e operare in totale sicurezza.
                     </p>
                     <div className="grid grid-cols-2 items-center gap-6 py-4">
-                        {/* Colonna Sinistra */}
                         <div>
                             <div className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
                                 $42B+
@@ -221,7 +263,6 @@ export const RegistrationForm = () => {
                             </div>
                         </div>
 
-                        {/* Divisore verticale + Colonna Destra */}
                         <div className="flex items-center gap-6 border-l border-slate-700/60 pl-6">
                             <div>
                                 <div className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
@@ -240,6 +281,6 @@ export const RegistrationForm = () => {
                     <a href="#" className="hover:text-slate-300 transition-colors">Note Legali</a>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
