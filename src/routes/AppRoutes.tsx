@@ -18,17 +18,12 @@ export const AppRoutes = () => {
                 {/* Registrazione nuovo conto corrente */}
                 <Route path="/register" element={<RegisterPage />} />
 
-<<<<<<< HEAD
-                {/* Reindirizza qualsiasi altro indirizzo (es. "/") direttamente a "/login" */}
+                {/* Homepage della Dashboard */}
+                <Route path="/homepage" element={<HomePage />} />
+
+                {/* Reindirizza qualsiasi altro indirizzo sconosciuto direttamente a "/login" */}
                 <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
         </AnimatePresence>
-=======
-            <Route path="/homepage" element={<HomePage />} />
-
-            {/* Reindirizza qualsiasi altro indirizzo (es. "/") direttamente a "/login" */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
->>>>>>> 9136230 (creation navbar)
     );
 };
