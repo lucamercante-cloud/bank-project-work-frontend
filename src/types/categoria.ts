@@ -1,5 +1,5 @@
 export interface CategoriaMovimento {
-  categoriaMovimentoID:string;
+  id: string;
   nomeCategoria: string;
   tipologia: 'Entrata' | 'Uscita';
 }

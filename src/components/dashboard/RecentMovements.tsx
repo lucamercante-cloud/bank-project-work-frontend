@@ -1,13 +1,6 @@
 import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/formatDate";
-
-interface Movimento {
-    id: string;
-    data: string;
-    descrizioneEstesa: string;
-    categoria: { nome: string };
-    importo: number
-}
+import type { Movimento } from "../../types/movimento";
 
 interface RecentMovementsProps {
     movimenti: Movimento[];
@@ -45,7 +38,7 @@ export const RecentMovements = ({ movimenti, saldoFinale }: RecentMovementsProps
                                     <td className="py-3.5 font-medium text-white">{m.descrizioneEstesa}</td>
                                     <td className="py-3.5 text-center">
                                         <span className="px-3 py-1 rounded-full text-[10px] font-medium border border-slate-700 bg-slate-900 text-slate-300">
-                                            {m.categoria?.nome || "Generale"}
+                                            {m.categoriaMovimento?.nomeCategoria || "Generale"}
                                         </span>
                                     </td>
                                     <td className={`py-3.5 text-right font-bold ${isPositive ? "text-emerald-400" : "text-rose-400"}`}>

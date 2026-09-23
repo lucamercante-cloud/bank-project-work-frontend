@@ -1,9 +1,11 @@
+import type { CategoriaMovimento } from "./categoria";
+
 export interface Movimento {
-  movimentoID:  string;
+  id: string;
   contoCorrenteID: number;
-  data: Date;
+  data: string;
   importo: number;
   saldo: number;
-  categoriaMovimento: String;
+  categoriaMovimento?: CategoriaMovimento;
   descrizioneEstesa: string;
 }
