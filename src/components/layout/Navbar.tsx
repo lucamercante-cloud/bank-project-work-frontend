@@ -11,8 +11,7 @@ const Navbar = () => {
         { label: "Home", navigation: "/homepage" },
         { label: "Ricerca movimenti", navigation: "/ricerca-movimenti" },
         { label: "Ricarica", navigation: "/ricarica" },
-        { label: "Bonifico", navigation: "/bonifico" },
-        { label: "Profilo", navigation: "/profilo" },
+        { label: "Bonifico", navigation: "/bonifico" }
     ];
 
     const handleLogout = () => {
@@ -85,14 +84,16 @@ const Navbar = () => {
                             {getInitials(profile.nomeTitolare, profile.cognomeTitolare)}
                         </div>
                         {/* Nome, Cognome e Numero Conto presi da `profile` */}
-                        <div className="flex flex-col text-left">
-                            <span className="font-bold text-white text-xs uppercase tracking-wide leading-tight">
-                                {profile.nomeTitolare} {profile.cognomeTitolare}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-medium">
-                                Private Account #{profile.iban || profile.id}
-                            </span>
-                        </div>
+                        <NavLink to="/profilo">
+                            <div className="flex flex-col text-left">
+                                <span className="font-bold text-white text-xs uppercase tracking-wide leading-tight">
+                                    {profile.nomeTitolare} {profile.cognomeTitolare}
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-medium">
+                                    Private Account #{profile.iban || profile.id}
+                                </span>
+                            </div>
+                        </NavLink>
                     </div>
                 ) : (
                     /* Skeleton / Placeholder durante il caricamento */
