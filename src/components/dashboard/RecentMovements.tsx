@@ -31,7 +31,7 @@ export const RecentMovements = ({ movimenti, saldoFinale }: RecentMovementsProps
                     </thead>
                     <tbody className="divide-y divide-slate-800/60">
                         {movimenti.map((m) => {
-                            const isPositive = m.importo > 0;
+                            const isPositive = m.categoriaMovimento?.tipologia === "Entrata";
                             return (
                                 <tr key={m.id} className="hover:bg-slate-900/40 transition-colors">
                                     <td className="py-3.5 text-slate-400">{formatDate(m.data)}</td>

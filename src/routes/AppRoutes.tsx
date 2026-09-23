@@ -5,6 +5,7 @@ import { RegisterPage } from "../pages/auth/RegisterPage";
 import { HomePage } from "../pages/dashboard/HomePage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PhoneRechargePage } from "../pages/operations/RechargePage";
+import { MovementDetail } from "../pages/movements/MovementDetailPage";
 
 export const AppRoutes = () => {
     const location = useLocation();
@@ -22,6 +23,7 @@ export const AppRoutes = () => {
                     {/* Qui puoi aggiungere altre rotte che richiedono il login */}
                     {/* <Route path="/ricerca-movimenti" element={<RicercaPage />} /> */}
                     <Route path="/ricarica" element={<PhoneRechargePage />} />
+                    <Route path="/movimenti/:id" element={<MovementDetail />} />
                 </Route>
 
                 {/* Redirect per rotte sconosciute */}
