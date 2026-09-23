@@ -50,9 +50,11 @@ const Navbar = () => {
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center p-1.5 shadow-md">
                         <img src="src/assets/gemini-svg.svg" alt="logo" className="w-full h-full object-contain" />
                     </div>
-                    <span className="font-extrabold text-white text-base tracking-wider">
-                        GEMIT <span className="text-lime-400">BANK</span>
-                    </span>
+                    <NavLink to="/homepage">
+                        <span className="font-extrabold text-white text-base tracking-wider">
+                            GEMIT<span className="text-lime-400">BANK</span>
+                        </span>
+                    </NavLink>
                 </div>
 
                 {/* Lista Link */}
