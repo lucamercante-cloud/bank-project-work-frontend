@@ -1,9 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { SaldoLayout } from "../../components/layout/saldoLayout";
 import { RechargeLayout } from "../../components/layout/RechargeLayout";
-import { PhoneRechargeForm} from "../../components/operations/RechargeForm";
+import { PhoneRechargeForm } from "../../components/operations/RechargeForm";
+import { getMovimenti } from "../../services/movimenti.service";
 
 export const PhoneRechargePage = () => {
-    const [userBalance, setUserBalance] = useState(1250.00);
+    const [saldoFinale, setSaldoFinale] = useState<number>(0);
+
+    // Funzione per richiedere l'ultimo saldo dal service
+    const fetchSaldo = async () => {
+        try {
+            const movRes = await getMovimenti({ n: 1 });
+            // Legge direttamente la proprietà saldoFinale dalla risposta API
+            const saldo = movRes?.saldoFinale ?? 0;
+            setSaldoFinale(saldo);
+        } catch (error) {
+            console.error("Errore durante il recupero del saldo:", error);
+        }
+    };
+
+    // Recupera il saldo all'avvio della pagina
+    useEffect(() => {
+        fetchSaldo();
+    }, []);
 
     return (
         <RechargeLayout>
@@ -17,22 +36,12 @@ export const PhoneRechargePage = () => {
                         </p>
                     </div>
 
-                    {/* Card Saldo Disponibile */}
-                    <div className="bg-[#0b101d] border border-slate-800/80 rounded-lg p-4 w-full md:w-64 shadow-lg">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-                            SALDO DISPONIBILE
-                        </p>
-                        <p className="text-2xl font-extrabold text-[#59DE00]">
-                            € {userBalance.toLocaleString("it-IT", { minimumFractionDigits: 2 })}
-                        </p>
-                    </div>
+                    {/* SaldoLayout riceve saldoFinale */}
+                    <SaldoLayout saldoFinale={saldoFinale} />
                 </div>
 
-                {/* Form Operazione */}
-                <PhoneRechargeForm
-                    userBalance={userBalance}
-                    onRechargeSuccess={(newBalance) => setUserBalance(newBalance)}
-                />
+                {/* Form Operazione: richiama fetchSaldo quando la ricarica va a buon fine */}
+                <PhoneRechargeForm onRechargeSuccess={fetchSaldo} />
             </main>
         </RechargeLayout>
     );

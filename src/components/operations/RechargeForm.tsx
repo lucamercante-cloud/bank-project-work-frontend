@@ -5,11 +5,10 @@ import { PROVIDERS, RECHARGE_AMOUNTS } from "../../utils/rechargeConstants";
 import { processRecharge } from "../../services/rechargeService";
 
 interface PhoneRechargeFormProps {
-    userBalance: number;
-    onRechargeSuccess: (newBalance: number) => void;
+    onRechargeSuccess?: () => void;
 }
 
-export const PhoneRechargeForm = ({ userBalance, onRechargeSuccess }: PhoneRechargeFormProps) => {
+export const PhoneRechargeForm = ({ onRechargeSuccess }: PhoneRechargeFormProps) => {
     // Stati del Form
     const [selectedProvider, setSelectedProvider] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -26,7 +25,7 @@ export const PhoneRechargeForm = ({ userBalance, onRechargeSuccess }: PhoneRecha
         setErrorMessage("");
         setSuccessMessage("");
 
-        // 1. Validazioni preliminari lato Client
+        // Validazioni preliminari
         if (!selectedProvider) {
             setErrorMessage("Seleziona un operatore telefonico.");
             return;
@@ -39,37 +38,30 @@ export const PhoneRechargeForm = ({ userBalance, onRechargeSuccess }: PhoneRecha
             setErrorMessage("Seleziona un taglio di ricarica.");
             return;
         }
-        if (selectedAmount > userBalance) {
-            setErrorMessage("Saldo insufficiente per completare l'operazione.");
-            return;
-        }
 
         setIsLoading(true);
 
         try {
-            // 2. Mappatura esatta del DTO per il Backend
             const transactionData: RechargeTransaction = {
                 numeroTelefono: phoneNumber.trim(),
                 operatore: selectedProvider,
                 taglio: selectedAmount,
             };
 
-            // 3. Esecuzione della richiesta POST tramite il Service
-            const response = await processRecharge(transactionData);
+            await processRecharge(transactionData);
 
-            // Calcolo nuovo saldo (utilizza quello del backend se presente, altrimenti sottrae localmente)
-            const newBalance = response.nuovoSaldo ?? (userBalance - selectedAmount);
-            onRechargeSuccess(newBalance);
+            if (onRechargeSuccess) {
+                onRechargeSuccess();
+            }
 
             setSuccessMessage(`Ricarica di €${selectedAmount} inviata con successo al numero ${phoneNumber}!`);
 
-            // Reset dei campi del form dopo il successo
+            // Reset dei campi del form
             setPhoneNumber("");
             setSelectedAmount(null);
             setSelectedProvider("");
 
         } catch (error: any) {
-            // Gestione errore da Axios/Backend
             const apiErrorMessage = error.response?.data?.message || "Si è verificato un errore durante l'elaborazione della ricarica.";
             setErrorMessage(apiErrorMessage);
         } finally {
@@ -160,7 +152,7 @@ export const PhoneRechargeForm = ({ userBalance, onRechargeSuccess }: PhoneRecha
                 </div>
             )}
 
-            {/* BOTTONE DI INVIO (Con effetto Hover a Bordi Verdi e Testo Verde su Sfondo Scuro) */}
+            {/* BOTTONE DI INVIO */}
             <button
                 type="submit"
                 disabled={isLoading}
