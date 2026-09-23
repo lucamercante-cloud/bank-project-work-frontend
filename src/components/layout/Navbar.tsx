@@ -103,7 +103,7 @@ const Navbar = () => {
 
                 <button
                     onClick={handleLogout}
-                    className="text-xs font-semibold text-rose-500 hover:text-rose-400 underline transition-colors"
+                    className="px-4 py-1.5 rounded-xl border-2 border-red-500 bg-[#060a12] text-red-500 text-xs font-bold hover:bg-red-500 hover:text-black transition-all duration-200 cursor-pointer"
                 >
                     Esci
                 </button>
