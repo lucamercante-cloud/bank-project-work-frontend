@@ -21,7 +21,7 @@ export const HomePage = () => {
             try {
                 const [contoRes, movRes, catRes] = await Promise.all([
                     me(),
-                    getMovimenti({ n: 5 }), // Scarica i primi 5 movimenti
+                    getMovimenti({ n: 5 }),
                     getCategorie()
                 ]);
                 setConto(contoRes);
@@ -50,10 +50,24 @@ export const HomePage = () => {
     }, []);
 
     // Gestione della ricerca via filtri
-    const handleFilterSearch = async (filters: any) => {
+    const handleFilterSearch = async (
+        n: number,
+        categoriaId: string,
+        dataInizio: string,
+        dataFine: string
+    ) => {
         try {
-            const data = await getMovimenti(filters);
-            setMovimenti(data);
+            const filters: Record<string, any> = { n };
+            if (categoriaId) filters.categoriaId = categoriaId;
+            if (dataInizio) filters.dataInizio = dataInizio;
+            if (dataFine) filters.dataFine = dataFine;
+            const res = await getMovimenti(filters);
+
+            const listaMovimenti = Array.isArray(res)
+                ? res
+                : res?.movimenti || res?.data || [];
+
+            setMovimenti(listaMovimenti);
         } catch (err) {
             console.error("Errore durante il filtraggio dei movimenti:", err);
         }

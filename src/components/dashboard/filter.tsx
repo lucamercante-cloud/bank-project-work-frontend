@@ -1,9 +1,8 @@
-import type { filterProps } from "framer-motion";
 import React, { useState } from "react";
 
 interface FilterProps {
     categorie: Array<{ id: string; nomeCategoria: string }>;
-    onSearch: (filters: any) => void;
+    onSearch: (n: number, categoriaId: string, dataInizio: string, dataFine: string) => void;
 }
 
 export const Filter = ({ categorie, onSearch }: FilterProps) => {
@@ -14,7 +13,7 @@ export const Filter = ({ categorie, onSearch }: FilterProps) => {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        onSearch({ n: numMovimenti, categoriaId, dataInizio, dataFine });
+        onSearch(numMovimenti, categoriaId, dataInizio, dataFine);
     };
 
     return (

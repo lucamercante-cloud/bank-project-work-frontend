@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/formatDate";
 
 interface Movimento {
     id: string;
     data: string;
-    descrizione: string;
+    descrizioneEstesa: string;
     categoria: { nome: string };
     importo: number
 }
@@ -40,8 +41,8 @@ export const RecentMovements = ({ movimenti, saldoFinale }: RecentMovementsProps
                             const isPositive = m.importo > 0;
                             return (
                                 <tr key={m.id} className="hover:bg-slate-900/40 transition-colors">
-                                    <td className="py-3.5 text-slate-400">{m.data}</td>
-                                    <td className="py-3.5 font-medium text-white">{m.descrizione}</td>
+                                    <td className="py-3.5 text-slate-400">{formatDate(m.data)}</td>
+                                    <td className="py-3.5 font-medium text-white">{m.descrizioneEstesa}</td>
                                     <td className="py-3.5 text-center">
                                         <span className="px-3 py-1 rounded-full text-[10px] font-medium border border-slate-700 bg-slate-900 text-slate-300">
                                             {m.categoria?.nome || "Generale"}

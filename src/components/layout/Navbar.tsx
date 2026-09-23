@@ -99,7 +99,7 @@ const Navbar = () => {
                     <div className="text-xs text-slate-500 animate-pulse">Caricamento...</div>
                 )}
 
-                <div className="h-6 w-[1px] bg-slate-800"></div>
+                <div className="h-6 w-px bg-slate-800"></div>
 
                 <button
                     onClick={handleLogout}

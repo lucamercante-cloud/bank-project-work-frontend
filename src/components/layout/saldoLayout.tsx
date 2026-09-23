@@ -6,7 +6,7 @@ interface saldoFinaleProps {
 export const SaldoLayout = ({ saldoFinale }: saldoFinaleProps) => {
 
     return (
-        <div className="bg-[#141b2d] border border-slate-800 rounded-lg p-4 text-right min-w-[220px]">
+        <div className="bg-[#141b2d] border border-slate-800 rounded-lg p-4 text-right min-w-55">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                 Saldo Conto Corrente
             </span>

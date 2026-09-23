@@ -40,7 +40,7 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => {
             className="fixed inset-0 w-screen h-screen flex bg-slate-950 text-slate-100 font-sans overflow-hidden"
         >
             {/* --- SEZIONE SINISTRA: Form di Registrazione --- */}
-            <div className="w-full lg:w-1/2 bg-white text-slate-900 flex flex-col justify-between p-8 md:p-16 h-full overflow-y-auto shrink-0 [scrollbar-gutter:stable]">
+            <div className="w-full lg:w-1/2 bg-white text-slate-900 flex flex-col justify-between p-8 md:p-16 h-full overflow-y-auto shrink-0 scrollbar-gutter:stable">
                 {children}
             </div>
 
