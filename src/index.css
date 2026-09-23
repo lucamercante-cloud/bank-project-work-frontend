@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* src/index.css */
+html,
+body {
+    background-color: #070913;
+    /* Lo stesso colore scuro della dashboard */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
