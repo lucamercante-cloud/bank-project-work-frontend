@@ -78,13 +78,13 @@ const Navbar = () => {
             {/* 2. SEZIONE DESTRA: Profilo Utente + Esci */}
             <div className="flex items-center gap-6">
                 {profile ? (
-                    <div className="flex items-center gap-3">
-                        {/* Iniziali utente */}
-                        <div className="w-9 h-9 bg-emerald-400 text-slate-950 font-bold text-xs rounded-full flex items-center justify-center shadow-sm">
-                            {getInitials(profile.nomeTitolare, profile.cognomeTitolare)}
-                        </div>
-                        {/* Nome, Cognome e Numero Conto presi da `profile` */}
-                        <NavLink to="/profilo">
+                    <NavLink to="/profilo">
+                        <div className="flex items-center gap-3">
+                            {/* Iniziali utente */}
+                            <div className="w-9 h-9 bg-emerald-400 text-slate-950 font-bold text-xs rounded-full flex items-center justify-center shadow-sm">
+                                {getInitials(profile.nomeTitolare, profile.cognomeTitolare)}
+                            </div>
+                            {/* Nome, Cognome e Numero Conto presi da `profile` */}
                             <div className="flex flex-col text-left">
                                 <span className="font-bold text-white text-xs uppercase tracking-wide leading-tight">
                                     {profile.nomeTitolare} {profile.cognomeTitolare}
@@ -93,8 +93,8 @@ const Navbar = () => {
                                     Private Account #{profile.iban || profile.id}
                                 </span>
                             </div>
-                        </NavLink>
-                    </div>
+                        </div>
+                    </NavLink>
                 ) : (
                     /* Skeleton / Placeholder durante il caricamento */
                     <div className="text-xs text-slate-500 animate-pulse">Caricamento...</div>
