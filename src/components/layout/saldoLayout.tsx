@@ -2,7 +2,6 @@ interface saldoFinaleProps {
     saldoFinale: number
 }
 
-
 export const SaldoLayout = ({ saldoFinale }: saldoFinaleProps) => {
 
     return (

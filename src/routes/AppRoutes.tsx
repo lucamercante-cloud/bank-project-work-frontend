@@ -6,6 +6,7 @@ import { HomePage } from "../pages/dashboard/HomePage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PhoneRechargePage } from "../pages/operations/RechargePage";
 import { MovementDetail } from "../pages/movements/MovementDetailPage";
+import { ProfilePage } from "../pages/profile/ProfilePage";
 
 export const AppRoutes = () => {
     const location = useLocation();
@@ -20,10 +21,9 @@ export const AppRoutes = () => {
                 {/* ROTTE PROTETTE (Richiedono il Token) */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/homepage" element={<HomePage />} />
-                    {/* Qui puoi aggiungere altre rotte che richiedono il login */}
-                    {/* <Route path="/ricerca-movimenti" element={<RicercaPage />} /> */}
                     <Route path="/ricarica" element={<PhoneRechargePage />} />
                     <Route path="/movimenti/:id" element={<MovementDetail />} />
+                    <Route path="/profilo" element={<ProfilePage />} />
                 </Route>
 
                 {/* Redirect per rotte sconosciute */}
