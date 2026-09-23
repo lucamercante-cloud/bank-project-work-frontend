@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 interface WelcomeCardProps {
     nome?: string;
     cognome?: string;
-    saldo?: number;
+    saldoFinale?: number;
 }
 
-export const WelcomeCard = ({ nome, cognome, saldo }: WelcomeCardProps) => {
+export const WelcomeCard = ({ nome, cognome, saldoFinale }: WelcomeCardProps) => {
     return (
         <div className="bg-[#0f1424] border border-slate-800 rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
@@ -23,7 +23,7 @@ export const WelcomeCard = ({ nome, cognome, saldo }: WelcomeCardProps) => {
                     Saldo Conto Corrente
                 </span>
                 <span className="text-2xl font-extrabold text-emerald-400 block mt-0.5">
-                    € {saldo?.toLocaleString("it-IT", { minimumFractionDigits: 2 }) ?? "0,00"}
+                    € {saldoFinale?.toLocaleString("it-IT", { minimumFractionDigits: 2 }) ?? "0,00"}
                 </span>
                 <span className="text-[10px] text-emerald-500 font-medium flex items-center justify-end gap-1 mt-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Fondi disponibili e garantiti

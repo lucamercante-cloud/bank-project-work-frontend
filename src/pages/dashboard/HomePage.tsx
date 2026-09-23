@@ -12,6 +12,7 @@ export const HomePage = () => {
     const [conto, setConto] = useState<any>(null);
     const [movimenti, setMovimenti] = useState<any[]>([]);
     const [categorie, setCategorie] = useState<any[]>([]);
+    const [saldoFinale, setSaldoFinale] = useState<number>(0);
     const [loading, setLoading] = useState(true);
 
     // Caricamento iniziale dei dati (Profilo, Categorie e ultimi 5 movimenti)
@@ -28,7 +29,10 @@ export const HomePage = () => {
                 const listaMovimenti = Array.isArray(movRes)
                     ? movRes
                     : movRes?.movimenti || movRes?.data || [];
+
+                const saldo = movRes.saldoFinale;
                 setMovimenti(listaMovimenti);
+                setSaldoFinale(saldo);
 
                 const listaCategorie = Array.isArray(catRes)
                     ? catRes
@@ -64,7 +68,7 @@ export const HomePage = () => {
                         <WelcomeCard
                             nome={conto?.nomeTitolare || conto?.nome}
                             cognome={conto?.cognomeTitolare || conto?.cognome}
-                            saldo={conto?.saldo}
+                            saldoFinale={saldoFinale}
                         />
 
                         {/* 2. Accesso Rapido Bonifico */}
@@ -74,7 +78,7 @@ export const HomePage = () => {
                         <Filter categorie={categorie} onSearch={handleFilterSearch} />
 
                         {/* 4. Tabella Ultimi Movimenti */}
-                        <RecentMovements movimenti={movimenti} saldoFinale={conto?.saldo} />
+                        <RecentMovements movimenti={movimenti} saldoFinale={saldoFinale} />
                     </>
                 ) : (
                     <div className="text-center py-20 text-slate-500 animate-pulse">
