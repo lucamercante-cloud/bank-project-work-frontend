@@ -108,7 +108,7 @@ export const ProfilePage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-1 gap-y-6 gap-x-8 mt-8">
-                        <button className="px-4 py-2 rounded-lg bg-red-600/60 hover:bg-red-600 text-xs font-semibold text-slate-200 transition-colors cursor-pointer">
+                        <button className="w-full md:w-1/2 lg:w-1/3 mx-auto mt-6 block py-2.5 rounded-xl border-2 border-red-500 text-red-500 text-xs font-bold hover:bg-red-500 hover:text-black transition-all duration-200 cursor-pointer">
                             Modifica Password
                         </button>
                     </div>
