@@ -160,11 +160,11 @@ export const PhoneRechargeForm = ({ userBalance, onRechargeSuccess }: PhoneRecha
                 </div>
             )}
 
-            {/* BOTTONE DI INVIO */}
+            {/* BOTTONE DI INVIO (Con effetto Hover a Bordi Verdi e Testo Verde su Sfondo Scuro) */}
             <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#59DE00] hover:bg-[#4bc200] disabled:opacity-50 text-black font-extrabold py-3.5 px-6 rounded-lg transition-all duration-200 shadow-lg shadow-[#59DE00]/20 text-sm tracking-wide uppercase"
+                className="w-full bg-[#59DE00] text-black border-2 border-[#59DE00] font-extrabold py-3.5 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-[#59DE00]/20 text-sm tracking-wide uppercase hover:bg-transparent hover:text-[#59DE00] disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isLoading ? "Elaborazione in corso..." : "Conferma Ricarica"}
             </button>
