@@ -29,9 +29,9 @@ const Navbar = () => {
                 setProfile(data);
             }
             catch (err) {
-                console.error("Errore nel recupero del profilo:", err)
+                console.error("Errore nel recupero del profilo:", err);
             }
-        }
+        };
         fetchProfile();
     }, []);
 
@@ -41,7 +41,8 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-[#090b16] border-b border-slate-800/80 px-8 py-3.5 w-full flex items-center justify-between text-slate-300 text-sm">
+        /* Aggiunte le classi `sticky top-0 z-50` e `shadow-lg` */
+        <nav className="sticky top-0 z-50 bg-[#090b16] border-b border-slate-800/80 px-8 py-3.5 w-full flex items-center justify-between text-slate-300 text-sm shadow-lg">
             {/* 1. SEZIONE SINISTRA: Logo + Link di Navigazione */}
             <div className="flex items-center gap-10">
                 {/* Logo GEMIT BANK */}

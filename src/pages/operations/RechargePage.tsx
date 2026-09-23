@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RechargeLayout } from "../../components/layout/RechargeLayout";
-import { PhoneRechargeForm } from "../../components/operations/PhoneRechargeForm";
+import { PhoneRechargeForm} from "../../components/operations/RechargeForm";
 
 export const PhoneRechargePage = () => {
     const [userBalance, setUserBalance] = useState(1250.00);
