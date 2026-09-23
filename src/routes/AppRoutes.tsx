@@ -7,7 +7,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { PhoneRechargePage } from "../pages/operations/RechargePage";
 import { MovementDetail } from "../pages/movements/MovementDetailPage";
 import { ProfilePage } from "../pages/profile/ProfilePage";
-
+import { BonificoPage } from "../pages/operations/BonificoPage";
 export const AppRoutes = () => {
     const location = useLocation();
 
@@ -24,6 +24,7 @@ export const AppRoutes = () => {
                     <Route path="/ricarica" element={<PhoneRechargePage />} />
                     <Route path="/movimenti/:id" element={<MovementDetail />} />
                     <Route path="/profilo" element={<ProfilePage />} />
+                       <Route path="/bonifico" element={<BonificoPage />} />
                 </Route>
 
                 {/* Redirect per rotte sconosciute */}
