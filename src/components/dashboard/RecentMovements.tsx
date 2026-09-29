@@ -4,10 +4,11 @@ import type { Movimento } from "../../types/movimento";
 
 interface RecentMovementsProps {
     movimenti: Movimento[];
-    saldoFinale: number
+    saldoFinale: number;
+    isFiltered: boolean
 }
 
-export const RecentMovements = ({ movimenti, saldoFinale }: RecentMovementsProps) => {
+export const RecentMovements = ({ movimenti, saldoFinale, isFiltered }: RecentMovementsProps) => {
     return (
         <div className="bg-[#0f1424] border border-slate-800 rounded-xl p-6">
             <div className="flex justify-between items-center mb-6">
@@ -55,13 +56,14 @@ export const RecentMovements = ({ movimenti, saldoFinale }: RecentMovementsProps
                     </tbody>
                 </table>
             </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
-                <span className="text-slate-500">I saldi si intendono aggiornati in tempo reale.</span>
-                <span className="font-bold text-slate-300">
-                    Saldo Finale: <span className="text-emerald-400 text-base ml-2">€ {saldoFinale?.toLocaleString("it-IT", { minimumFractionDigits: 2 })}</span>
-                </span>
-            </div>
+            {!isFiltered && (
+                <div className="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
+                    <span className="text-slate-500">I saldi si intendono aggiornati in tempo reale.</span>
+                    <span className="font-bold text-slate-300">
+                        Saldo Finale: <span className="text-emerald-400 text-base ml-2">€ {saldoFinale?.toLocaleString("it-IT", { minimumFractionDigits: 2 })}</span>
+                    </span>
+                </div>
+            )}
         </div>
     );
 };

@@ -9,7 +9,6 @@ const Navbar = () => {
 
     const listBtnsNav = [
         { label: "Home", navigation: "/homepage" },
-        { label: "Ricerca movimenti", navigation: "/ricerca-movimenti" },
         { label: "Ricarica", navigation: "/ricarica" },
         { label: "Bonifico", navigation: "/bonifico" }
     ];
