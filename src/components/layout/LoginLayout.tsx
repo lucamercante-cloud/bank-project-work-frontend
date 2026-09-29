@@ -3,56 +3,55 @@ import logoImg from "../../assets/gemini-svg.svg";
 
 interface LoginLayoutProps {
     children: ReactNode;
-    onResetSession?: () => void; // Callback per resettare la form
+    onResetSession?: () => void;
 }
 
-// 30 secondi in millisecondi
-const INACTIVITY_LIMIT = 30 * 1000;
+const INACTIVITY_LIMIT = 30 * 1000; // 30 secondi
 
 export const LoginLayout = ({ children, onResetSession }: LoginLayoutProps) => {
     const [isTimedOut, setIsTimedOut] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    const handleTimeoutTrigger = () => {
-        setIsTimedOut(true);
-        if (onResetSession) {
-            onResetSession(); // Reset dei dati della form alla scadenza
-        }
-    };
+    const canUnlockRef = useRef(false);
 
     const resetTimer = () => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-        }
-        timerRef.current = setTimeout(handleTimeoutTrigger, INACTIVITY_LIMIT);
-    };
+        if (timerRef.current) clearTimeout(timerRef.current);
 
-    const handleResume = () => {
-        setIsTimedOut(false);
-        if (onResetSession) {
-            onResetSession(); // Reset quando l'utente clicca su Riprendi
-        }
-        resetTimer();
+        timerRef.current = setTimeout(() => {
+            canUnlockRef.current = false;
+            setIsTimedOut(true);
+            
+            if (onResetSession) onResetSession();
+
+            // Periodo di grazia di 1 secondo per prevenire la chiusura istantanea
+            setTimeout(() => {
+                canUnlockRef.current = true;
+            }, 1000);
+        }, INACTIVITY_LIMIT);
     };
 
     useEffect(() => {
-        const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
-
         resetTimer();
 
         const handleActivity = () => {
             setIsTimedOut((prev) => {
                 if (prev) {
+                    if (!canUnlockRef.current) return true;
+
                     if (onResetSession) onResetSession();
                     return false;
                 }
                 return prev;
             });
-            resetTimer();
+
+            if (canUnlockRef.current || !isTimedOut) {
+                resetTimer();
+            }
         };
 
+        const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
+
         events.forEach((event) => {
-            window.addEventListener(event, handleActivity);
+            window.addEventListener(event, handleActivity, { passive: true });
         });
 
         return () => {
@@ -65,24 +64,18 @@ export const LoginLayout = ({ children, onResetSession }: LoginLayoutProps) => {
 
     return (
         <main className="min-h-screen flex w-full bg-slate-950 text-slate-100 font-sans relative">
-            {/* --- OVERLAY TIMEOUT CON BLUR --- */}
+            {/* --- OVERLAY TIMEOUT STILIZZATO IN VERDE --- */}
             {isTimedOut && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-all">
-                    <div className="bg-[#0b101d] border border-amber-500/40 p-6 sm:p-8 rounded-2xl max-w-md w-full text-center shadow-2xl">
-                        <div className="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                            ⚠️
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 transition-all">
+                    <div className="bg-[#0b101d] border border-[#59DE00]/40 p-6 sm:p-8 rounded-2xl max-w-md w-full text-center shadow-[0_0_30px_rgba(89,222,0,0.15)]">
+                        <div className="w-12 h-12 bg-[#59DE00]/10 text-[#59DE00] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl border border-[#59DE00]/20">
+                            ⏱️
                         </div>
                         <h3 className="text-xl font-bold text-white mb-2">Sessione Scaduta</h3>
-                        <p className="text-xs text-slate-300 leading-relaxed mb-6">
-                            La sessione di login è scaduta per inattività. Il modulo è stato ripristinato.
+                        <p className="text-xs text-slate-300 leading-relaxed">
+                            La sessione di login è scaduta per inattività. <br />
+                            <span className="text-[#59DE00] font-semibold">Muovi il mouse</span> o digita per continuare.
                         </p>
-                        <button
-                            type="button"
-                            onClick={handleResume}
-                            className="bg-[#59DE00] hover:bg-[#4bc200] text-black font-extrabold py-2.5 px-6 rounded-lg text-xs uppercase tracking-wide cursor-pointer transition-colors"
-                        >
-                            Riprendi Sessione
-                        </button>
                     </div>
                 </div>
             )}
