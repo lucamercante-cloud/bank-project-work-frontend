@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://192.168.40.74:3000/api',
+  baseURL: 'https://bank-project-work-backend.vercel.app/api/',
   headers: {
     'Content-Type': 'application/json'
   }
