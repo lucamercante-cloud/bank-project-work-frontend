@@ -14,6 +14,7 @@ export const HomePage = () => {
     const [categorie, setCategorie] = useState<any[]>([]);
     const [saldoFinale, setSaldoFinale] = useState<number>(0);
     const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState(false);
 
     // Caricamento iniziale dei dati (Profilo, Categorie e ultimi 5 movimenti)
     useEffect(() => {
@@ -67,6 +68,9 @@ export const HomePage = () => {
                 ? res
                 : res?.movimenti || res?.data || [];
 
+            if (filters.categoriaId || filters.dataInizio || filters.dataFine) { setFilter(true) }
+            else { setFilter(false) }
+
             setMovimenti(listaMovimenti);
         } catch (err) {
             console.error("Errore durante il filtraggio dei movimenti:", err);
@@ -92,7 +96,7 @@ export const HomePage = () => {
                         <Filter categorie={categorie} onSearch={handleFilterSearch} />
 
                         {/* 4. Tabella Ultimi Movimenti */}
-                        <RecentMovements movimenti={movimenti} saldoFinale={saldoFinale} />
+                        <RecentMovements movimenti={movimenti} saldoFinale={saldoFinale} isFiltered={filter} />
                     </>
                 ) : (
                     <div className="text-center py-20 text-slate-500 animate-pulse">
