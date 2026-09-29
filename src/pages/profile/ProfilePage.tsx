@@ -125,7 +125,11 @@ export const ProfilePage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-1 gap-y-6 gap-x-8 mt-8">
-                        <button className="px-4 py-2 rounded-lg bg-red-600/60 hover:bg-red-600 text-xs font-semibold text-slate-200 transition-colors cursor-pointer">
+                        <button 
+                            type="button"
+                            onClick={() => setIsPasswordModalOpen(true)}
+                            className="px-4 py-2 rounded-lg bg-red-600/60 hover:bg-red-600 text-xs font-semibold text-slate-200 transition-colors cursor-pointer"
+                        >
                             Modifica Password
                         </button>
                     </div>
