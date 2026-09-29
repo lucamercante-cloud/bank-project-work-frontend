@@ -25,13 +25,24 @@ export const ChangePasswordModal = ({
         e.preventDefault();
         setError(null);
 
+        // 1. Verifica campi obbligatori
         if (!vecchiaPassword || !nuovaPassword || !confermaNuovaPassword) {
             setError("Compila tutti i campi obbligatori.");
             return;
         }
 
+        // 2. Verifica corrispondenza tra nuova password e conferma
         if (nuovaPassword !== confermaNuovaPassword) {
             setError("La nuova password e la conferma non coincidono.");
+            return;
+        }
+
+        // 3. Validazione complessa: 1 maiuscola, 1 minuscola, 1 numero, 1 simbolo
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/;
+        if (!passwordRegex.test(nuovaPassword)) {
+            setError(
+                "La nuova password deve contenere almeno una lettera maiuscola, una minuscola, un numero e un simbolo speciale."
+            );
             return;
         }
 
@@ -54,7 +65,7 @@ export const ChangePasswordModal = ({
             onClose();
 
         } catch (err: any) {
-            // Gestione dei codici di errore HTTP dal backend
+            // Gestione errori backend
             if (err.response?.status === 400) {
                 setError(
                     err.response?.data?.message || 

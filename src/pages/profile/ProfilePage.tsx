@@ -2,26 +2,45 @@ import { useEffect, useState } from "react";
 import { me } from "../../services/conto.service";
 import type { ContoCorrente } from "../../types/conto";
 import { NavLink } from "react-router-dom";
+import { ChangePasswordModal } from "../../components/profile/ChangePasswordForm";
 
 export const ProfilePage = () => {
-
     const [profile, setProfile] = useState<ContoCorrente | null>(null);
+    
+    // 1. Stato per aprire/chiudere il modale
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    
+    // 2. Stato per la notifica di successo
+    const [showSuccessToast, setShowSuccessToast] = useState(false);
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const dataProfile = await me()
-                setProfile(dataProfile)
-            }
-            catch (err) {
+                const dataProfile = await me();
+                setProfile(dataProfile);
+            } catch (err) {
                 console.error("Errore nel caricamento del profilo: ", err);
             }
         };
-        fetchProfile()
+        fetchProfile();
     }, []);
+
+    // 3. Gestione del successo cambio password
+    const handlePasswordSuccess = () => {
+        setShowSuccessToast(true);
+        setTimeout(() => setShowSuccessToast(false), 4000);
+    };
 
     return (
         <div className="max-w-4xl mx-auto my-8 px-4 text-white">
+            {/* Banner di successo */}
+            {showSuccessToast && (
+                <div className="mb-4 p-4 bg-emerald-950/80 border border-emerald-500/50 rounded-xl text-emerald-300 text-xs font-semibold flex justify-between items-center">
+                    <span>Password aggiornata con successo!</span>
+                    <button onClick={() => setShowSuccessToast(false)} className="text-slate-400 hover:text-white cursor-pointer">✕</button>
+                </div>
+            )}
+
             {/* Header di Pagina */}
             <div className="mb-6 flex justify-between items-center">
                 <div>
@@ -102,18 +121,27 @@ export const ProfilePage = () => {
                                 <span className="w-1.5 h-1.5 rounded-2xl bg-emerald-400"></span>
                                 Attivo
                             </span>
-
                         </div>
-
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-1 gap-y-6 gap-x-8 mt-8">
-                        <button className="px-4 py-2 rounded-lg bg-red-600/60 hover:bg-red-600 text-xs font-semibold text-slate-200 transition-colors cursor-pointer">
+                        <button 
+                            type="button"
+                            onClick={() => setIsPasswordModalOpen(true)}
+                            className="px-4 py-2 rounded-lg bg-red-600/60 hover:bg-red-600 text-xs font-semibold text-slate-200 transition-colors cursor-pointer"
+                        >
                             Modifica Password
                         </button>
                     </div>
                 </div>
             </div>
+
+            {/* Modale Pop-up */}
+            <ChangePasswordModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onSuccess={handlePasswordSuccess}
+            />
         </div>
     );
-}
+};
