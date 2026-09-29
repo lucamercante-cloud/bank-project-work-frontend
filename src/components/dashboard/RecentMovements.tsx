@@ -5,10 +5,11 @@ import type { Movimento } from "../../types/movimento";
 interface RecentMovementsProps {
     movimenti: Movimento[];
     saldoFinale: number;
-    isFiltered: boolean
+    isFiltered: boolean;
+    onExport?: () => void;
 }
 
-export const RecentMovements = ({ movimenti, saldoFinale, isFiltered }: RecentMovementsProps) => {
+export const RecentMovements = ({ movimenti, saldoFinale, isFiltered, onExport }: RecentMovementsProps) => {
     return (
         <div className="bg-[#0f1424] border border-slate-800 rounded-xl p-6">
             <div className="flex justify-between items-center mb-6">
@@ -18,6 +19,14 @@ export const RecentMovements = ({ movimenti, saldoFinale, isFiltered }: RecentMo
                 </div>
                 <span className="text-[10px] text-slate-500">Valuta: EUR (€)</span>
             </div>
+
+            {onExport && (
+                <button
+                    onClick={onExport}
+                    className="cursor-pointer   bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5"
+                > Esporta Excel DIO CANE
+                </button>
+            )}
 
             <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">

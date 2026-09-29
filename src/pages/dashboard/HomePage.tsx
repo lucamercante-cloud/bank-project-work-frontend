@@ -77,6 +77,50 @@ export const HomePage = () => {
         }
     };
 
+    const handleExportCSV = async () => {
+        try {
+            const res = await getMovimenti({});
+            const tuttiIMovimenti = Array.isArray(res)
+                ? res
+                : res?.movimenti || res?.data || [];
+
+            if (tuttiIMovimenti.length === 0) {
+                alert("Nessun movimento da esportare.");
+                return;
+            }
+
+            // 2. Definizione delle intestazioni del CSV
+            const headers = ["ID", "Data", "Descrizione", "Categoria", "Tipologia", "Importo (€)"];
+
+            // 3. Mappatura delle righe
+            const rows = tuttiIMovimenti.map((m: any) => [
+                m.id,
+                m.data,
+                `"${(m.descrizioneEstesa || "").replace(/"/g, '""')}"`, // escape dei doppi apici
+                `"${m.categoriaMovimento?.nomeCategoria || "Generale"}"`,
+                m.categoriaMovimento?.tipologia || "-",
+                m.importo
+            ]);
+
+            // 4. Creazione contenuto CSV (usando \n per le righe e ; come separatore standard per Excel)
+            const csvContent =
+                "data:text/csv;charset=utf-8,\uFEFF" +
+                [headers.join(";"), ...rows.map((e: any[]) => e.join(";"))].join("\n");
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `estratto_conto_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        catch (err) {
+            console.error("Errore durante l'esportazione dei movimenti: ", err);
+            alert("Si è verificato un errore durante l'esportazione")
+        }
+    }
+
     return (
         <div className="min-h-screen bg-[#070913] text-slate-100 font-sans">
             <main className="max-w-7xl mx-auto px-6 py-8 space-y-6">
@@ -96,7 +140,7 @@ export const HomePage = () => {
                         <Filter categorie={categorie} onSearch={handleFilterSearch} />
 
                         {/* 4. Tabella Ultimi Movimenti */}
-                        <RecentMovements movimenti={movimenti} saldoFinale={saldoFinale} isFiltered={filter} />
+                        <RecentMovements movimenti={movimenti} saldoFinale={saldoFinale} isFiltered={filter} onExport={handleExportCSV} />
                     </>
                 ) : (
                     <div className="text-center py-20 text-slate-500 animate-pulse">
