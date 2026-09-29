@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import filterIcon from "../../assets/icon-filter.png";
 
 interface FilterProps {
     categorie: Array<{ id: string; nomeCategoria: string }>;
@@ -19,7 +20,7 @@ export const Filter = ({ categorie, onSearch }: FilterProps) => {
     return (
         <form onSubmit={handleSearch} className="bg-[#0f1424] border border-slate-800 rounded-xl p-6 text-xs">
             <div className="flex items-center gap-2 mb-4">
-                <span className="text-emerald-400 font-bold">|||</span>
+                <img src={filterIcon} alt="Filtro" className="w-4 h-4 object-contain" />
                 <span className="font-bold uppercase tracking-wider text-slate-300">Filtri di Ricerca Movimenti</span>
             </div>
 
@@ -71,7 +72,7 @@ export const Filter = ({ categorie, onSearch }: FilterProps) => {
                 <div>
                     <button
                         type="submit"
-                        className="w-full bg-[#59DE00] text-black font-bold py-2 rounded-lg hover:bg-white transition-all"
+                        className="w-full bg-[#59DE00] text-black font-bold py-2 rounded-lg hover:bg-white transition-all cursor-pointer"
                     >
                         Cerca
                     </button>
@@ -79,6 +80,4 @@ export const Filter = ({ categorie, onSearch }: FilterProps) => {
             </div>
         </form>
     );
-
-}
-
+};
