@@ -20,14 +20,6 @@ export const RecentMovements = ({ movimenti, saldoFinale, isFiltered, onExport }
                 <span className="text-[10px] text-slate-500">Valuta: EUR (€)</span>
             </div>
 
-            {onExport && (
-                <button
-                    onClick={onExport}
-                    className="cursor-pointer   bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5"
-                > Esporta Excel DIO CANE
-                </button>
-            )}
-
             <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                     <thead>
@@ -65,6 +57,15 @@ export const RecentMovements = ({ movimenti, saldoFinale, isFiltered, onExport }
                     </tbody>
                 </table>
             </div>
+            {onExport && (
+                <div className="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
+                    <button
+                        onClick={onExport}
+                        className="w-full bg-[#59DE00] text-black font-bold py-2 rounded-lg hover:bg-white transition-all cursor-pointer px-3 py-2"
+                    > Esporta Excel
+                    </button>
+                </div>
+            )}
             {!isFiltered && (
                 <div className="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
                     <span className="text-slate-500">I saldi si intendono aggiornati in tempo reale.</span>
