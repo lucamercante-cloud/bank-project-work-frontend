@@ -11,7 +11,7 @@ interface RecentMovementsProps {
 
 export const RecentMovements = ({ movimenti, saldoFinale, isFiltered, onExport }: RecentMovementsProps) => {
     return (
-        <div className="bg-[#0f1424] border border-slate-800 rounded-xl p-6">
+        <div className="bg-[#0f1424] border border-slate-800 rounded-xl p-4 sm:p-6">
             <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-2">
                     <span className="w-1 h-4 bg-emerald-500 rounded-full"></span>
@@ -20,7 +20,8 @@ export const RecentMovements = ({ movimenti, saldoFinale, isFiltered, onExport }
                 <span className="text-[10px] text-slate-500">Valuta: EUR (€)</span>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* DESKTOP: tabella */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-xs">
                     <thead>
                         <tr className="border-b border-slate-800 text-slate-400 uppercase text-[10px] tracking-wider">
@@ -57,17 +58,45 @@ export const RecentMovements = ({ movimenti, saldoFinale, isFiltered, onExport }
                     </tbody>
                 </table>
             </div>
+
+            {/* MOBILE: card */}
+            <div className="md:hidden space-y-3">
+                {movimenti.map((m) => {
+                    const isPositive = m.categoriaMovimento?.tipologia === "Entrata";
+                    return (
+                        <div key={m.id} className="bg-[#070913] border border-slate-800/80 rounded-lg p-3 text-xs space-y-2">
+                            <div className="flex justify-between items-center">
+                                <span className="text-slate-400">{formatDate(m.data)}</span>
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-medium border border-slate-700 bg-slate-900 text-slate-300">
+                                    {m.categoriaMovimento?.nomeCategoria || "Generale"}
+                                </span>
+                            </div>
+                            <p className="font-medium text-white break-words">{m.descrizioneEstesa}</p>
+                            <div className="flex justify-between items-center">
+                                <span className={`text-sm font-bold ${isPositive ? "text-emerald-400" : "text-rose-400"}`}>
+                                    {isPositive ? `+€ ${m.importo.toFixed(2)}` : `-€ ${Math.abs(m.importo).toFixed(2)}`}
+                                </span>
+                                <Link to={`/movimenti/${m.id}`} className="text-emerald-400 hover:underline font-semibold">
+                                    Dettagli
+                                </Link>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+
             {onExport && (
                 <div className="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
                     <button
                         onClick={onExport}
-                        className="w-full bg-[#59DE00] text-black font-bold py-2 rounded-lg hover:bg-white transition-all cursor-pointer px-3 py-2"
-                    > Esporta Excel
+                        className="w-full bg-[#59DE00] text-black font-bold py-2 rounded-lg hover:bg-white transition-all cursor-pointer px-3"
+                    >
+                        Esporta Excel
                     </button>
                 </div>
             )}
             {!isFiltered && (
-                <div className="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
+                <div className="mt-6 pt-4 border-t border-slate-800 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs">
                     <span className="text-slate-500">I saldi si intendono aggiornati in tempo reale.</span>
                     <span className="font-bold text-slate-300">
                         Saldo Finale: <span className="text-emerald-400 text-base ml-2">€ {saldoFinale?.toLocaleString("it-IT", { minimumFractionDigits: 2 })}</span>

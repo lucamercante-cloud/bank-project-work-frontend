@@ -17,12 +17,6 @@ export const BalanceCard = () => {
                 >
                     Nuovo Bonifico &rarr;
                 </Link>
-                <Link
-                    to="/ricerca-movimenti"
-                    className="bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-lg hover:bg-slate-800 transition-all"
-                >
-                    Storico Bonifici
-                </Link>
             </div>
         </div>
     );
