@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { WelcomeCard } from "../../components/dashboard/WelcomeCard";
 import { BalanceCard } from "../../components/dashboard/BalanceCard";
 import { Filter } from "../../components/dashboard/filter";
@@ -9,6 +10,7 @@ import { getMovimenti } from "../../services/movimenti.service";
 import { getCategorie } from "../../services/categorie.service";
 
 export const HomePage = () => {
+    const navigate = useNavigate();
     const [conto, setConto] = useState<any>(null);
     const [movimenti, setMovimenti] = useState<any[]>([]);
     const [categorie, setCategorie] = useState<any[]>([]);
@@ -16,9 +18,16 @@ export const HomePage = () => {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState(false);
 
-    // Caricamento iniziale dei dati (Profilo, Categorie e ultimi 5 movimenti)
+    // Caricamento iniziale dei dati con verifica del Token
     useEffect(() => {
         const loadInitialData = async () => {
+            // 1. Verifica immediata della presenza del token
+            const token = localStorage.getItem("token");
+            if (!token) {
+                navigate("/login", { replace: true });
+                return;
+            }
+
             try {
                 const [contoRes, movRes, catRes] = await Promise.all([
                     me(),
@@ -42,13 +51,17 @@ export const HomePage = () => {
 
             } catch (err) {
                 console.error("Errore nel caricamento della homepage:", err);
+                // 2. Se il token c'era ma non è valido o è scaduto (errore API), pulisci e manda al login
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                navigate("/login", { replace: true });
             } finally {
                 setLoading(false);
             }
         };
 
         loadInitialData();
-    }, []);
+    }, [navigate]);
 
     // Gestione della ricerca via filtri
     const handleFilterSearch = async (
@@ -89,20 +102,19 @@ export const HomePage = () => {
                 return;
             }
 
-            // 2. Definizione delle intestazioni del CSV
+            // Intestazioni CSV
             const headers = ["ID", "Data", "Descrizione", "Categoria", "Tipologia", "Importo (€)"];
 
-            // 3. Mappatura delle righe
+            // Mappatura delle righe
             const rows = tuttiIMovimenti.map((m: any) => [
                 m.id,
                 m.data,
-                `"${(m.descrizioneEstesa || "").replace(/"/g, '""')}"`, // escape dei doppi apici
+                `"${(m.descrizioneEstesa || "").replace(/"/g, '""')}"`,
                 `"${m.categoriaMovimento?.nomeCategoria || "Generale"}"`,
                 m.categoriaMovimento?.tipologia || "-",
                 m.importo
             ]);
 
-            // 4. Creazione contenuto CSV (usando \n per le righe e ; come separatore standard per Excel)
             const csvContent =
                 "data:text/csv;charset=utf-8,\uFEFF" +
                 [headers.join(";"), ...rows.map((e: any[]) => e.join(";"))].join("\n");
@@ -117,9 +129,9 @@ export const HomePage = () => {
         }
         catch (err) {
             console.error("Errore durante l'esportazione dei movimenti: ", err);
-            alert("Si è verificato un errore durante l'esportazione")
+            alert("Si è verificato un errore durante l'esportazione");
         }
-    }
+    };
 
     return (
         <div className="min-h-screen bg-[#070913] text-slate-100 font-sans">
