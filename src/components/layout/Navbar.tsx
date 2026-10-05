@@ -3,6 +3,7 @@ import { me } from "../../services/conto.service";
 import { useEffect, useState } from "react";
 import type { ContoCorrente } from "../../types/conto";
 import { logout } from "../../services/auth.service";
+import logoSvg from "../../assets/gemini-svg.svg";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-10">
                     <div className="flex items-center gap-2.5">
                         <div className="w-10 h-10 rounded-lg flex items-center justify-center p-1.5 shadow-md">
-                            <img src="src/assets/gemini-svg.svg" alt="logo" className="w-full h-full object-contain" />
+                            <img src={logoSvg} alt="logo" className="w-full h-full object-contain" />
                         </div>
                         <NavLink to="/homepage">
                             <span className="font-extrabold text-white text-base tracking-wider">
