@@ -126,7 +126,6 @@ export const LoginForm = () => {
                         <input type="checkbox" className="rounded border-slate-300 text-[#59DE00] focus:ring-[#59DE00] w-4 h-4 accent-[#59DE00]" />
                         Ricordami
                     </label>
-                    <a href="#" className="text-[#59DE00] font-semibold hover:underline">Password dimenticata?</a>
                 </div>
 
                 <button

@@ -19,7 +19,7 @@ export const LoginLayout = ({ children, onResetSession }: LoginLayoutProps) => {
         timerRef.current = setTimeout(() => {
             canUnlockRef.current = false;
             setIsTimedOut(true);
-            
+
             if (onResetSession) onResetSession();
 
             // Periodo di grazia di 1 secondo per prevenire la chiusura istantanea
@@ -106,7 +106,6 @@ export const LoginLayout = ({ children, onResetSession }: LoginLayoutProps) => {
 
                 <div className="relative z-10 flex justify-between text-xs text-slate-500 border-t border-slate-800/80 pt-4">
                     <p>Gemit Bank Corporation © 2026</p>
-                    <a href="#" className="text-[#59DE00] hover:underline">Registro Privato</a>
                 </div>
             </div>
 

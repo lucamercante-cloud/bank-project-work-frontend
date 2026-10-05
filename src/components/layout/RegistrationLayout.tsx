@@ -94,7 +94,6 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => {
                 {/* Footer Banner */}
                 <div className="relative z-10 flex justify-between text-xs text-slate-500 border-t border-slate-800/80 pt-4">
                     <p>© 2026 Gemit Bank Corporation</p>
-                    <a href="#" className="hover:text-slate-300 transition-colors">Note Legali</a>
                 </div>
             </div>
         </motion.div>
